@@ -10,7 +10,7 @@ const require=createRequire(import.meta.url),{chromium}=require('playwright');
 const root=new URL('../',import.meta.url),port=4189,url=`http://127.0.0.1:${port}/`;
 const server=spawn(process.execPath,['scripts/serve.mjs'],{cwd:root,env:{...process.env,PORT:String(port)},stdio:['ignore','pipe','inherit']});
 let browser,context,page;
-const checks=[],errors=[],requests=[],csp=[];
+const checks=[],errors=[],requests=[],csp=[],captures=[];
 let navigationRecovery = null;
 const check=async(name,fn)=>{await fn();checks.push(name);console.log(`PASS ${name}`);};
 const load=async()=>{await page.goto(url);await page.locator('#solve:enabled').waitFor();};
@@ -19,6 +19,23 @@ const run=async()=>{await page.locator('#solve').click();await page.locator('#ca
 const importText=async(data)=>{await page.locator('#open-import').click();await page.locator('#json-input').fill(typeof data==='string'?data:JSON.stringify(data));await page.locator('#import-form button[type=submit]').click();};
 const importOk=async(data)=>{await importText(data);await page.locator('#import-dialog').waitFor({state:'hidden'});};
 const exportJson=async(id)=>{const pending=page.waitForEvent('download');await page.locator(id).click();const download=await pending;return JSON.parse(await readFile(await download.path(),'utf8'));};
+const captureStablePage=async(name)=>{
+  await page.evaluate(async()=>{
+    window.scrollTo({top:0,left:0,behavior:'instant'});
+    await document.fonts.ready;
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  });
+  const captureState=await page.evaluate(()=>{
+    const link=document.querySelector('.skip-link'),rect=link.getBoundingClientRect(),style=getComputedStyle(link);
+    return {scrollX,scrollY,viewportWidth:innerWidth,viewportHeight:innerHeight,skipLink:{top:rect.top,bottom:rect.bottom,opacity:style.opacity,transform:style.transform,focused:document.activeElement===link}};
+  });
+  assert.equal(captureState.scrollY,0);
+  assert.equal(captureState.skipLink.focused,false);
+  assert.equal(captureState.skipLink.opacity,'0');
+  assert.ok(captureState.skipLink.bottom<0,JSON.stringify(captureState));
+  captures.push({name,...captureState});
+  await page.screenshot({path:new URL(`../artifacts/${name}.png`,import.meta.url).pathname,fullPage:true,animations:'disabled'});
+};
 const dense=()=>({version:1,title:'Synthetic cancellation workload',day:{start:540,end:720,step:15},rooms:[{id:'a',label:'A'},{id:'b',label:'B'}],resources:[{id:'kit',label:'Kit'}],sessions:Array.from({length:8},(_,i)=>({id:`s${i}`,title:`Synthetic ${i}`,duration:15,start:540,roomId:'a',earliestStart:540,latestStart:705,eligibleRoomIds:['a','b'],resourceIds:['kit'],pinned:false})),blackouts:[]});
 try{
   await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);server.once('exit',code=>reject(new Error(`Server exited ${code}`)));});
@@ -32,7 +49,7 @@ try{
   await load();
   await check('synthetic baseline loads without an unsolicited proposal',async()=>{assert.match(await page.locator('#project-title').innerText(),/ものづくり/);assert.equal(await page.locator('#export-proposal').isDisabled(),true);assert.equal(await page.locator('.demo-card').count(),3);});
   await check('room blackout repair yields exact two-session minimum',async()=>{await run();assert.match(await page.locator('#proposal-badge').innerText(),/最適/);assert.match(await page.locator('#metric-count').innerText(),/^2/);assert.match(await page.locator('#metric-shift').innerText(),/^30/);assert.match(await page.locator('#metric-rooms').innerText(),/^2/);});
-  await page.screenshot({path:new URL('../artifacts/desktop.png',import.meta.url).pathname,fullPage:true});
+  await captureStablePage('desktop');
   await check('proposed JSON preserves original baseline and passes independent verification',async()=>{const out=await exportJson('#export-proposal');assert.equal(out.version,1);assert.equal(out.problem.sessions.find(s=>s.id==='photo').start,615);assert.equal(out.proposal.status,'optimal');assert.equal(verifyAssignments(out.problem,out.proposal.assignments).ok,true);assert.equal(out.proposal.objective.changedSessions,2);});
   await check('equipment blackout works across different rooms',async()=>{await choose(1);await run();assert.match(await page.locator('#metric-shift').innerText(),/^120/);assert.match(await page.locator('#metric-rooms').innerText(),/^0/);});
   await check('pinned obstruction reports proven infeasibility and disables export',async()=>{await choose(2);await run();assert.match(await page.locator('#proposal-badge').innerText(),/解なし|配置不可|修復不可|実行不可|実行不能/);assert.equal(await page.locator('#export-proposal').isDisabled(),true);});
@@ -118,10 +135,12 @@ try{
         await other.setViewportSize({width,height:844});await other.goto(`${url}?skip-width=${width}`);await other.locator('#solve:enabled').waitFor();
         const hiddenRect=await other.locator('.skip-link').evaluate(link=>{const r=link.getBoundingClientRect();return {top:r.top,bottom:r.bottom};});
         assert.ok(hiddenRect.bottom<0,JSON.stringify({width,hiddenRect}));
+        assert.equal(await other.locator('.skip-link').evaluate(link=>getComputedStyle(link).opacity),'0');
         await other.keyboard.press('Tab');
         assert.equal(await other.evaluate(()=>document.activeElement.classList.contains('skip-link')),true);
         const focusedRect=await other.locator('.skip-link').boundingBox();
         assert.ok(focusedRect.y>=0 && focusedRect.y+focusedRect.height<=844,JSON.stringify(focusedRect));
+        assert.equal(await other.locator('.skip-link').evaluate(link=>getComputedStyle(link).opacity),'1');
         await other.keyboard.press('Enter');
         assert.equal(new URL(other.url()).hash,'#workspace');
         await other.locator('#solve').focus();
@@ -129,10 +148,10 @@ try{
       }
     }finally{await other.close();}
   });
-  await check('390px and 320px layouts avoid page-level horizontal overflow',async()=>{for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.equal(await page.locator('#solve').isVisible(),true);}await page.setViewportSize({width:390,height:844});await page.screenshot({path:new URL('../artifacts/mobile.png',import.meta.url).pathname,fullPage:true});});
+  await check('390px and 320px layouts avoid page-level horizontal overflow',async()=>{for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.equal(await page.locator('#solve').isVisible(),true);}await page.setViewportSize({width:390,height:844});await captureStablePage('mobile');});
   await check('maximum-length text stays contained at 320px',async()=>{const p=structuredClone(DEMOS[0].problem);p.title='T'.repeat(120);p.sessions.forEach(s=>s.title='S'.repeat(120));p.rooms.forEach(r=>r.label='R'.repeat(120));p.resources.forEach(r=>r.label='Q'.repeat(120));await importOk(p);await run();await page.setViewportSize({width:320,height:740});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);});
   await check('no runtime errors, CSP violations or outbound application requests',async()=>{assert.deepEqual(errors,[]);assert.deepEqual(csp,[]);assert.ok(requests.every(r=>r.startsWith(url)||r.startsWith('blob:')),JSON.stringify(requests));});
-  const report={measuredAt:new Date().toISOString(),chromium:browser.version(),checks,errors,csp,navigationRecovery,network:'No non-local requests observed during real UI flows',viewports:['1440x1100','390x844','320x740'],limitations:'Synthetic Chromium automation only; physical devices, screen readers, other browsers and demand unverified. Worker stale-result and pending-navigation flows use controlled mocks. Persisted page-transition events are also dispatched explicitly; actual Back/Forward BFCache use is recorded separately.'};
+  const report={measuredAt:new Date().toISOString(),chromium:browser.version(),checks,errors,csp,captures,navigationRecovery,network:'No non-local requests observed during real UI flows',viewports:['1440x1100','390x844','320x740'],limitations:'Synthetic Chromium automation only; physical devices, screen readers, other browsers and demand unverified. Worker stale-result and pending-navigation flows use controlled mocks. Persisted page-transition events are also dispatched explicitly; actual Back/Forward BFCache use is recorded separately.'};
   await writeFile(new URL('../docs/browser-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
 }catch(error){if(page)await page.screenshot({path:new URL('../artifacts/failure.png',import.meta.url).pathname,fullPage:true}).catch(()=>{});throw error;}
 finally{server.kill();if(browser)await browser.close();}

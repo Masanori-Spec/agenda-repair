@@ -1310,6 +1310,8 @@ textarea {
   left: 15px;
   top: 0;
   transform: translateY(calc(-100% - 12px));
+  opacity: 0;
+  pointer-events: none;
   max-width: calc(100vw - 30px);
   z-index: 1000;
   background: var(--ink);
@@ -1321,7 +1323,9 @@ textarea {
 
 .skip-link:focus {
   top: 12px;
-  transform: translateY(0)
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto
 }
 
 @keyframes pulse {
