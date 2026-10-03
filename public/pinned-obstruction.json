@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "title": "架空デモ · 固定条件で修復できない例",
+  "day": {
+    "start": 540,
+    "end": 780,
+    "step": 15
+  },
+  "rooms": [
+    {
+      "id": "hall",
+      "label": "ホール"
+    },
+    {
+      "id": "studio",
+      "label": "スタジオ"
+    },
+    {
+      "id": "lab",
+      "label": "ラボ"
+    }
+  ],
+  "resources": [
+    {
+      "id": "projector",
+      "label": "移動式プロジェクター"
+    },
+    {
+      "id": "camera",
+      "label": "撮影キット"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "intro",
+      "title": "準備の説明",
+      "start": 540,
+      "duration": 30,
+      "roomId": "hall",
+      "earliestStart": 540,
+      "latestStart": 540,
+      "eligibleRoomIds": [
+        "hall"
+      ],
+      "resourceIds": [],
+      "pinned": true
+    },
+    {
+      "id": "demo",
+      "title": "装置の実演",
+      "start": 600,
+      "duration": 45,
+      "roomId": "lab",
+      "earliestStart": 570,
+      "latestStart": 675,
+      "eligibleRoomIds": [
+        "lab",
+        "studio"
+      ],
+      "resourceIds": [],
+      "pinned": true
+    },
+    {
+      "id": "labels",
+      "title": "展示ラベルの確認",
+      "start": 585,
+      "duration": 30,
+      "roomId": "studio",
+      "earliestStart": 570,
+      "latestStart": 660,
+      "eligibleRoomIds": [
+        "studio",
+        "hall"
+      ],
+      "resourceIds": [],
+      "pinned": false
+    },
+    {
+      "id": "walkthrough",
+      "title": "会場の見学",
+      "start": 675,
+      "duration": 45,
+      "roomId": "hall",
+      "earliestStart": 645,
+      "latestStart": 720,
+      "eligibleRoomIds": [
+        "hall",
+        "studio"
+      ],
+      "resourceIds": [],
+      "pinned": false
+    }
+  ],
+  "blackouts": [
+    {
+      "id": "lab-safety-check",
+      "type": "room",
+      "targetId": "lab",
+      "start": 590,
+      "end": 650
+    }
+  ]
+}

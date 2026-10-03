@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "title": "架空デモ · 動画制作ワークショップ",
+  "day": {
+    "start": 540,
+    "end": 780,
+    "step": 15
+  },
+  "rooms": [
+    {
+      "id": "hall",
+      "label": "ホール"
+    },
+    {
+      "id": "studio",
+      "label": "スタジオ"
+    },
+    {
+      "id": "lab",
+      "label": "ラボ"
+    }
+  ],
+  "resources": [
+    {
+      "id": "projector",
+      "label": "移動式プロジェクター"
+    },
+    {
+      "id": "camera",
+      "label": "撮影キット"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "brief",
+      "title": "制作の説明",
+      "start": 540,
+      "duration": 30,
+      "roomId": "hall",
+      "earliestStart": 540,
+      "latestStart": 540,
+      "eligibleRoomIds": [
+        "hall"
+      ],
+      "resourceIds": [],
+      "pinned": true
+    },
+    {
+      "id": "capture",
+      "title": "商品カット撮影",
+      "start": 570,
+      "duration": 45,
+      "roomId": "studio",
+      "earliestStart": 570,
+      "latestStart": 675,
+      "eligibleRoomIds": [
+        "studio",
+        "lab"
+      ],
+      "resourceIds": [
+        "camera"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "interview",
+      "title": "インタビュー撮影",
+      "start": 615,
+      "duration": 45,
+      "roomId": "lab",
+      "earliestStart": 585,
+      "latestStart": 690,
+      "eligibleRoomIds": [
+        "studio",
+        "lab"
+      ],
+      "resourceIds": [
+        "camera"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "edit",
+      "title": "編集の基本",
+      "start": 600,
+      "duration": 45,
+      "roomId": "hall",
+      "earliestStart": 570,
+      "latestStart": 690,
+      "eligibleRoomIds": [
+        "hall",
+        "studio"
+      ],
+      "resourceIds": [
+        "projector"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "color",
+      "title": "色と明るさの調整",
+      "start": 660,
+      "duration": 30,
+      "roomId": "hall",
+      "earliestStart": 600,
+      "latestStart": 705,
+      "eligibleRoomIds": [
+        "hall",
+        "lab"
+      ],
+      "resourceIds": [
+        "projector"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "showcase",
+      "title": "上映会",
+      "start": 735,
+      "duration": 45,
+      "roomId": "hall",
+      "earliestStart": 735,
+      "latestStart": 735,
+      "eligibleRoomIds": [
+        "hall"
+      ],
+      "resourceIds": [
+        "projector"
+      ],
+      "pinned": true
+    }
+  ],
+  "blackouts": [
+    {
+      "id": "camera-inspection",
+      "type": "resource",
+      "targetId": "camera",
+      "start": 570,
+      "end": 630
+    }
+  ]
+}

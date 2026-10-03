@@ -1,0 +1,520 @@
+{
+  "measuredAt": "2026-10-03T05:02:44.302Z",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "osRelease": "6.18.44",
+    "cpuModel": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "method": "Single local Node run per workload/budget; wall time includes cooperative timer yields. No browser timing, no production traffic, no statistical latency claim. Search control is a deterministic node budget.",
+  "differentialBank": {
+    "inputs": 2150,
+    "seedRanges": [
+      [
+        1,
+        150
+      ],
+      [
+        150001,
+        152000
+      ]
+    ],
+    "feasibleSeeds": 852,
+    "infeasibleSeeds": 1298,
+    "exhaustiveLeaves": 87951,
+    "maxLeaves": 1296
+  },
+  "results": [
+    {
+      "id": "room-closure",
+      "nodeBudget": 200000,
+      "sessions": 6,
+      "rooms": 3,
+      "nominalDomains": [
+        14,
+        16,
+        12,
+        6
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 30,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 30,
+        "roomChanges": 2,
+        "tieBreak": [
+          735,
+          0,
+          645,
+          1,
+          600,
+          1,
+          660,
+          0,
+          570,
+          0,
+          540,
+          0
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": null,
+      "elapsedMs": 1.551
+    },
+    {
+      "id": "equipment-blackout",
+      "nodeBudget": 200000,
+      "sessions": 6,
+      "rooms": 3,
+      "nominalDomains": [
+        16,
+        16,
+        18,
+        16
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 15,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 120,
+        "roomChanges": 0,
+        "tieBreak": [
+          540,
+          0,
+          630,
+          2,
+          660,
+          0,
+          600,
+          0,
+          675,
+          1,
+          735,
+          0
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": null,
+      "elapsedMs": 0.555
+    },
+    {
+      "id": "pinned-obstruction",
+      "nodeBudget": 200000,
+      "sessions": 4,
+      "rooms": 3,
+      "nominalDomains": [
+        14,
+        12
+      ],
+      "status": "infeasible",
+      "reason": "complete",
+      "nodes": 0,
+      "objective": null,
+      "verified": null,
+      "knownFeasibleWitnessVerified": null,
+      "elapsedMs": 0.129
+    },
+    {
+      "id": "seeded-light-20261003",
+      "nodeBudget": 256,
+      "sessions": 4,
+      "rooms": 2,
+      "nominalDomains": [
+        46,
+        46,
+        46,
+        46
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 204,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 30,
+        "roomChanges": 1,
+        "tieBreak": [
+          615,
+          1,
+          585,
+          0,
+          615,
+          0,
+          585,
+          1
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 4.859
+    },
+    {
+      "id": "seeded-light-20261003",
+      "nodeBudget": 4096,
+      "sessions": 4,
+      "rooms": 2,
+      "nominalDomains": [
+        46,
+        46,
+        46,
+        46
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 204,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 30,
+        "roomChanges": 1,
+        "tieBreak": [
+          615,
+          1,
+          585,
+          0,
+          615,
+          0,
+          585,
+          1
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 2.548
+    },
+    {
+      "id": "seeded-light-20261003",
+      "nodeBudget": 50000,
+      "sessions": 4,
+      "rooms": 2,
+      "nominalDomains": [
+        46,
+        46,
+        46,
+        46
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 204,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 30,
+        "roomChanges": 1,
+        "tieBreak": [
+          615,
+          1,
+          585,
+          0,
+          615,
+          0,
+          585,
+          1
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 2.012
+    },
+    {
+      "id": "seeded-medium-72817",
+      "nodeBudget": 256,
+      "sessions": 6,
+      "rooms": 2,
+      "nominalDomains": [
+        44,
+        44,
+        44,
+        44,
+        44,
+        44
+      ],
+      "status": "feasible",
+      "reason": "budget",
+      "nodes": 256,
+      "objective": {
+        "changedSessions": 3,
+        "totalShiftMinutes": 90,
+        "roomChanges": 1,
+        "tieBreak": [
+          540,
+          1,
+          630,
+          1,
+          540,
+          0,
+          585,
+          1,
+          585,
+          0,
+          630,
+          0
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 2.213
+    },
+    {
+      "id": "seeded-medium-72817",
+      "nodeBudget": 4096,
+      "sessions": 6,
+      "rooms": 2,
+      "nominalDomains": [
+        44,
+        44,
+        44,
+        44,
+        44,
+        44
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 1042,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 135,
+        "roomChanges": 1,
+        "tieBreak": [
+          540,
+          1,
+          630,
+          1,
+          600,
+          0,
+          585,
+          1,
+          555,
+          0,
+          645,
+          0
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 11.043
+    },
+    {
+      "id": "seeded-medium-72817",
+      "nodeBudget": 50000,
+      "sessions": 6,
+      "rooms": 2,
+      "nominalDomains": [
+        44,
+        44,
+        44,
+        44,
+        44,
+        44
+      ],
+      "status": "optimal",
+      "reason": "complete",
+      "nodes": 1042,
+      "objective": {
+        "changedSessions": 2,
+        "totalShiftMinutes": 135,
+        "roomChanges": 1,
+        "tieBreak": [
+          540,
+          1,
+          630,
+          1,
+          600,
+          0,
+          585,
+          1,
+          555,
+          0,
+          645,
+          0
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 11.487
+    },
+    {
+      "id": "seeded-tight-92389",
+      "nodeBudget": 256,
+      "sessions": 8,
+      "rooms": 1,
+      "nominalDomains": [
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22
+      ],
+      "status": "unknown",
+      "reason": "budget",
+      "nodes": 256,
+      "objective": null,
+      "verified": null,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 0.748
+    },
+    {
+      "id": "seeded-tight-92389",
+      "nodeBudget": 4096,
+      "sessions": 8,
+      "rooms": 1,
+      "nominalDomains": [
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22
+      ],
+      "status": "unknown",
+      "reason": "budget",
+      "nodes": 4096,
+      "objective": null,
+      "verified": null,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 18.526
+    },
+    {
+      "id": "seeded-tight-92389",
+      "nodeBudget": 50000,
+      "sessions": 8,
+      "rooms": 1,
+      "nominalDomains": [
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22
+      ],
+      "status": "unknown",
+      "reason": "budget",
+      "nodes": 50000,
+      "objective": null,
+      "verified": null,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 214.941
+    },
+    {
+      "id": "seeded-max120-120120",
+      "nodeBudget": 200000,
+      "sessions": 8,
+      "rooms": 6,
+      "nominalDomains": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120
+      ],
+      "status": "feasible",
+      "reason": "budget",
+      "nodes": 200000,
+      "objective": {
+        "changedSessions": 7,
+        "totalShiftMinutes": 540,
+        "roomChanges": 0,
+        "tieBreak": [
+          570,
+          0,
+          600,
+          4,
+          540,
+          0,
+          630,
+          2,
+          660,
+          4,
+          690,
+          1,
+          720,
+          4,
+          750,
+          5
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 1930.631
+    },
+    {
+      "id": "seeded-full20-120120",
+      "nodeBudget": 200000,
+      "sessions": 20,
+      "rooms": 6,
+      "nominalDomains": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120
+      ],
+      "status": "feasible",
+      "reason": "budget",
+      "nodes": 200000,
+      "objective": {
+        "changedSessions": 7,
+        "totalShiftMinutes": 540,
+        "roomChanges": 0,
+        "tieBreak": [
+          855,
+          0,
+          855,
+          1,
+          855,
+          2,
+          855,
+          3,
+          855,
+          4,
+          855,
+          5,
+          885,
+          0,
+          885,
+          1,
+          885,
+          2,
+          885,
+          3,
+          885,
+          4,
+          885,
+          5,
+          570,
+          0,
+          600,
+          4,
+          540,
+          0,
+          630,
+          2,
+          660,
+          4,
+          690,
+          1,
+          720,
+          4,
+          750,
+          5
+        ]
+      },
+      "verified": true,
+      "knownFeasibleWitnessVerified": true,
+      "elapsedMs": 4658.104
+    }
+  ]
+}

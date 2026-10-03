@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "title": "架空デモ · ものづくり体験会",
+  "day": {
+    "start": 540,
+    "end": 780,
+    "step": 15
+  },
+  "rooms": [
+    {
+      "id": "hall",
+      "label": "ホール"
+    },
+    {
+      "id": "studio",
+      "label": "スタジオ"
+    },
+    {
+      "id": "lab",
+      "label": "ラボ"
+    }
+  ],
+  "resources": [
+    {
+      "id": "projector",
+      "label": "移動式プロジェクター"
+    },
+    {
+      "id": "camera",
+      "label": "撮影キット"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "welcome",
+      "title": "オープニング",
+      "start": 540,
+      "duration": 30,
+      "roomId": "hall",
+      "earliestStart": 540,
+      "latestStart": 540,
+      "eligibleRoomIds": [
+        "hall"
+      ],
+      "resourceIds": [],
+      "pinned": true
+    },
+    {
+      "id": "story",
+      "title": "アイデアの伝え方",
+      "start": 570,
+      "duration": 45,
+      "roomId": "studio",
+      "earliestStart": 570,
+      "latestStart": 600,
+      "eligibleRoomIds": [
+        "studio",
+        "hall"
+      ],
+      "resourceIds": [
+        "projector"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "prototype",
+      "title": "紙で試作品をつくる",
+      "start": 600,
+      "duration": 45,
+      "roomId": "lab",
+      "earliestStart": 570,
+      "latestStart": 675,
+      "eligibleRoomIds": [
+        "studio",
+        "lab"
+      ],
+      "resourceIds": [],
+      "pinned": false
+    },
+    {
+      "id": "photo",
+      "title": "試作品の撮影",
+      "start": 615,
+      "duration": 30,
+      "roomId": "studio",
+      "earliestStart": 600,
+      "latestStart": 690,
+      "eligibleRoomIds": [
+        "studio",
+        "lab"
+      ],
+      "resourceIds": [
+        "camera"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "review",
+      "title": "レビューと改善",
+      "start": 660,
+      "duration": 45,
+      "roomId": "hall",
+      "earliestStart": 630,
+      "latestStart": 705,
+      "eligibleRoomIds": [
+        "hall",
+        "studio"
+      ],
+      "resourceIds": [
+        "projector"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "closing",
+      "title": "共有タイム",
+      "start": 735,
+      "duration": 30,
+      "roomId": "hall",
+      "earliestStart": 735,
+      "latestStart": 735,
+      "eligibleRoomIds": [
+        "hall"
+      ],
+      "resourceIds": [],
+      "pinned": true
+    }
+  ],
+  "blackouts": [
+    {
+      "id": "studio-service",
+      "type": "room",
+      "targetId": "studio",
+      "start": 600,
+      "end": 660
+    }
+  ]
+}

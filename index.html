@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f2eb">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; worker-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="会場・機材の制約を守りながら、タイムテーブルの変更をできるだけ小さく。ブラウザだけで動くスケジュール修復ツール。">
+  <title>Agenda Repair — 予定を、動かしすぎない。</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/style.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">ワークスペースへ移動</a>
+  <header class="site-header wrap">
+    <a class="brand" href="#" aria-label="Agenda Repair ホーム"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>Agenda<span class="brand-light">Repair</span></span></a>
+    <span class="local-label"><span class="local-dot" aria-hidden="true"></span>ブラウザ内で完結</span>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div><p class="eyebrow">SMALL CHANGES. WORKABLE PLANS.</p><h1 id="hero-title">予定を、<br class="mobile-break">動かしすぎない。</h1><p class="hero-description">会場が使えない。機材が重なる。<br>元の予定を残したまま、変更の少ない組み直しを探します。</p></div>
+      <div class="hero-note"><span class="note-number" aria-hidden="true">01 → 02</span><p>変更する件数 → 時刻の移動量 → 会場の変更数<br>この順で、小さくする。</p></div>
+    </section>
+
+    <section id="workspace" class="workspace" aria-labelledby="workspace-title">
+      <div class="section-top"><div><p class="eyebrow">THE WORKSPACE</p><h2 id="workspace-title">まずは、予定を選ぶ</h2></div><button id="open-import" class="button button-secondary" type="button"><span aria-hidden="true">↥</span> JSONを読み込む</button></div>
+      <div id="demo-list" class="demo-list" aria-label="サンプルの予定"></div>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <div id="error-notice" class="notice notice-error" role="alert" hidden></div>
+
+      <div class="project-header"><div><p class="eyebrow">CURRENT PLAN</p><h2 id="project-title">予定を読み込んでいます</h2><p id="project-meta" class="muted"></p></div><div class="project-actions"><button id="export-baseline" class="text-button" type="button" disabled>元の予定を保存 <span aria-hidden="true">↓</span></button></div></div>
+      <div class="repair-control">
+        <div class="repair-copy"><span class="control-icon" aria-hidden="true">↗</span><div><h3>条件を守って、組み直す</h3><p>元の開始時刻・会場は書き換えません</p></div></div>
+        <div class="solve-actions"><label class="budget-label" for="node-budget">探索上限<select id="node-budget"><option value="200000">200,000 ノード</option><option value="20000">20,000 ノード（短い探索）</option><option value="1000000">1,000,000 ノード（長い探索）</option></select></label><button id="solve" class="button button-primary" type="button" disabled>修復案を探す <span aria-hidden="true">→</span></button><button id="cancel" class="button button-secondary" type="button" hidden>探索を停止</button></div>
+      </div>
+      <div class="status-strip"><p id="solve-status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span id="solve-status-text">まだ探索していません</span></p><span id="progress" class="mono">— nodes</span></div>
+
+      <div class="comparison" aria-label="元の予定と修復案の比較">
+        <section class="plan-panel baseline-panel" aria-labelledby="baseline-title"><header class="panel-header"><div><span class="panel-index">01</span><h3 id="baseline-title">元の予定</h3></div><span id="baseline-badge" class="badge">確認中</span></header><p class="panel-description">比較の基準。元の配置を保持します。</p><div id="baseline-timeline" class="timeline-scroll" tabindex="0" role="region" aria-label="元の予定のタイムライン。横方向にスクロールできます"></div><div id="baseline-issues" class="baseline-issues"></div></section>
+        <section class="plan-panel proposal-panel" aria-labelledby="proposal-title"><header class="panel-header"><div><span class="panel-index">02</span><h3 id="proposal-title">修復案</h3></div><span id="proposal-badge" class="badge">未計算</span></header><p id="proposal-description" class="panel-description">探索が終わると、独立検証済みの配置を表示します。</p><div id="proposal-timeline" class="timeline-scroll" tabindex="0" role="region" aria-label="修復案のタイムライン。横方向にスクロールできます"><div class="empty-state"><span class="empty-glyph" aria-hidden="true">▥</span><strong>次の予定を、ここに。</strong><p>必要な条件を調整して<br>「修復案を探す」を押してください</p></div></div><div class="timeline-legend"><span><i class="legend-original"></i>配置</span><span><i class="legend-changed"></i>変更あり</span><span><i class="legend-blackout"></i>会場利用不可</span><span>● 固定</span></div></section>
+      </div>
+
+      <section class="results" aria-labelledby="results-title"><div class="section-top compact"><div><p class="eyebrow">CHANGE RECEIPT</p><h2 id="results-title">何が、どれだけ変わる？</h2></div><button id="export-proposal" class="button button-secondary" type="button" disabled>修復案JSONを保存 <span aria-hidden="true">↓</span></button></div><div class="metrics"><div class="metric"><span class="metric-order">優先 1</span><span id="metric-count" class="metric-value">—<small>件</small></span><span class="metric-label">変更する予定</span></div><div class="metric"><span class="metric-order">優先 2</span><span id="metric-shift" class="metric-value">—<small>分</small></span><span class="metric-label">時刻の移動量の合計</span></div><div class="metric"><span class="metric-order">優先 3</span><span id="metric-rooms" class="metric-value">—<small>件</small></span><span class="metric-label">会場を変更する予定</span></div></div><div id="changes" class="changes-empty">まだ変更はありません。探索結果の差分がここに並びます。</div><p id="result-details" class="result-details muted"></p></section>
+
+      <div class="constraints-grid"><section class="constraints-section" aria-labelledby="sessions-title"><div class="section-top compact"><div><p class="eyebrow">KEEP WHAT MATTERS</p><h2 id="sessions-title">動かせない予定を固定</h2></div><span id="session-count" class="small-count"></span></div><p class="section-help">固定した予定は、開始時刻も会場もそのまま。行を開くと、時間帯・会場・機材の条件を確認できます。</p><div id="session-list" class="session-list"></div></section>
+      <section class="constraints-section" aria-labelledby="blackouts-title"><div class="section-top compact"><div><p class="eyebrow">WORK AROUND THE LIMITS</p><h2 id="blackouts-title">利用できない時間を追加</h2></div><span id="blackout-count" class="small-count"></span></div><p class="section-help">会場の使用停止や、機材が使えない時間帯を指定します。条件を変えると、修復案は再計算が必要です。</p><form id="blackout-form" novalidate><div class="form-row"><label for="blackout-type">対象の種類<select id="blackout-type" name="type"><option value="room">会場</option><option value="resource">機材</option></select></label><label for="blackout-target">対象<select id="blackout-target" name="target" required></select></label></div><div class="form-row"><label for="blackout-start">開始<input id="blackout-start" name="start" type="text" inputmode="numeric" maxlength="5" placeholder="09:00" aria-describedby="blackout-time-help" required></label><label for="blackout-end">終了<input id="blackout-end" name="end" type="text" inputmode="numeric" maxlength="5" placeholder="10:00" aria-describedby="blackout-time-help" required></label><button id="add-blackout" class="button button-secondary" type="submit">追加 <span aria-hidden="true">＋</span></button></div><p id="blackout-time-help" class="time-help">時刻は HH:MM で入力（終了は24:00も可）</p><p id="blackout-error" class="field-error" role="alert" hidden></p></form><ul id="blackout-list" class="blackout-list"></ul></section></div>
+      <section class="method-note" aria-labelledby="method-title"><span class="method-symbol" aria-hidden="true">i</span><div><h2 id="method-title">「最適」と言えるのは、探索が完了したときだけ。</h2><p>探索は、変更件数・時刻の移動量・会場変更数を順に最小化します。上限到達や停止時の有効な案は「最適性未証明」と表示。配置は別の検証器で、重複・時間帯・会場・機材・固定条件を再確認します。</p><p>最大20件の予定（可動8件）、6会場、8機材に対応。1件の可動予定は最大120候補。実在の個人情報や秘密情報を入力せず、公開・共有前には運営担当者が確認してください。</p></div></section>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><span class="footer-brand">Agenda Repair</span><p>入力はこのブラウザ内だけで処理。外部送信・自動保存はしません。</p><span class="footer-tag">PLAN. REPAIR. COMPARE.</span></footer>
+  <dialog id="import-dialog" aria-labelledby="import-title"><form id="import-form"><div class="dialog-header"><div><p class="eyebrow">BRING YOUR PLAN</p><h2 id="import-title">予定のJSONを読み込む</h2></div><button id="close-import" type="button" class="icon-button" aria-label="読み込み画面を閉じる">×</button></div><p class="section-help">元の予定の形式（version: 1）に対応します。修復案の監査用JSONは読み込み対象外です。入力に問題がある場合、現在の予定は変更しません。</p><label class="file-label" for="json-file">JSONファイルを選ぶ <span>100 KBまで</span><input id="json-file" type="file" accept=".json,application/json"></label><label for="json-input">または、JSONを貼り付ける<textarea id="json-input" rows="10" spellcheck="false" placeholder='{"version":1,"title":"イベント名",…}'></textarea></label><div id="import-errors" class="notice notice-error" role="alert" hidden></div><div class="dialog-actions"><button id="import-cancel" type="button" class="button button-secondary">キャンセル</button><button class="button button-primary" type="submit">この予定を読み込む</button></div></form></dialog>
+  <noscript><p class="notice">このツールにはJavaScriptが必要です。ブラウザの設定で有効にしてください。</p></noscript>
+</body>
+</html>
