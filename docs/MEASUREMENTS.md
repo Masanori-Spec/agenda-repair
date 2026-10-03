@@ -9,7 +9,7 @@ npm run check
 npm run benchmark
 ```
 
-`npm run check` runs syntax checks for JavaScript files and the entire Node test suite. `npm run benchmark` runs the benchmark, writes `docs/benchmark-results.json`, and prints the same report to standard output. That [raw benchmark output](benchmark-results.json) always reflects its latest run, including CI; this Markdown document is a dated measurement snapshot. Complete objective vectors and environment details are included in the JSON.
+`npm run check` runs syntax checks for JavaScript files and the entire Node test suite. `npm run benchmark` runs the benchmark, writes `docs/benchmark-results.json`, and prints the same report to standard output. The [latest benchmark output](benchmark-results.json) is overwritten by a new benchmark run. The original local measurement behind the table below is preserved separately in [local-benchmark-results.json](local-benchmark-results.json). Complete objective vectors and environment details are included in the JSON.
 
 ## Test result
 
@@ -68,4 +68,20 @@ Objective columns are changed sessions / total shift minutes / room changes. Com
 
 ## Scope and limits
 
-This report contains Node correctness tests and local algorithm measurements only. Browser interaction, rendering, accessibility, deployment, and real-world scheduling outcomes require separate evidence. The tiny exhaustive oracle bank gives strong differential regression coverage, not a mathematical proof that the implementation is correct for every supported input. Benchmark feasibility is checked independently; optimality for the larger benchmark cases relies on exhaustive completion by the production search, not on the tiny oracle.
+The table above contains local Node algorithm measurements. Subsequent Chromium CI evidence and its bounded scope are described below and in [VERIFICATION.md](VERIFICATION.md). Accessibility and real-world scheduling outcomes still require further evidence. The tiny exhaustive oracle bank gives strong differential regression coverage, not a mathematical proof that the implementation is correct for every supported input. Benchmark feasibility is checked independently; optimality for the larger benchmark cases relies on exhaustive completion by the production search, not on the tiny oracle.
+
+## Subsequent CI measurements and browser evidence
+
+[CI run 37100372657](https://github.com/Masanori-Spec/agenda-repair/actions/runs/37100372657) succeeded for application commit `79185cb4f69484704070f013dfe0d166a4eac5eb`. The original local data above has not been rewritten to make it look like CI data.
+
+- CI Node benchmark measured at 2026-10-03T05:36:54.261Z, Node v24.21.0, Linux x64, kernel 6.17.0-1022-azure, Intel Xeon 6973P-C
+- Preserved separately as [ci-benchmark-results.json](ci-benchmark-results.json)
+- Eight movable ×120 candidates: verified feasible incumbent at 200,000 nodes, 1,952.617 ms; optimality unproved
+- Full 20-session case including 12 pins: verified feasible incumbent at 200,000 nodes, 4,545.094 ms; optimality unproved
+- These are individual synthetic run times including cooperative yields, not latency percentiles or a speed guarantee
+- Browser report measured at 2026-10-03T05:37:26.383Z with Chromium 151.0.7922.34: 21 scenarios passed, no page errors/CSP violations recorded, and no non-local requests observed in the instrumented primary real UI flows
+- Viewports: 1440×1100, 390×844 and 320×740. Full-page captures were taken at scroll position 0 after font readiness and two animation frames
+- Desktop and mobile PNGs were inspected. The earlier clipped skip-link artifact is absent in these final captures; hidden-state geometry/opacity and keyboard reveal are checked
+- Real Back/Forward navigation passed but `bfcacheObserved` was false. The actual BFCache restoration path remains unverified; controlled persisted events and pure Node lifecycle tests cover the intended recovery logic
+
+See [browser-results.json](browser-results.json) for every check and capture diagnostic, and [ci-evidence.json](ci-evidence.json) for exact application revision, run and evidence hashes. No physical-device, cross-browser, screen-reader or real-user validation is implied.

@@ -1,0 +1,72 @@
+{
+  "measuredAt": "2026-10-03T05:37:26.383Z",
+  "chromium": "151.0.7922.34",
+  "checks": [
+    "synthetic baseline loads without an unsolicited proposal",
+    "room blackout repair yields exact two-session minimum",
+    "proposed JSON preserves original baseline and passes independent verification",
+    "equipment blackout works across different rooms",
+    "pinned obstruction reports proven infeasibility and disables export",
+    "unpinning an obstructed session invalidates results and allows repair",
+    "removing blackout restores zero-change baseline",
+    "blackout validation is nonmutating and valid edit invalidates proposal",
+    "strict invalid JSON leaves current model and valid proposal intact",
+    "keyboard Escape cancels import and restores focus",
+    "HTML-shaped labels remain inert text",
+    "baseline download round-trips current normalized input",
+    "cancelled asynchronous file read cannot alter a reopened dialog",
+    "real browser worker can be cancelled without claiming an optimum",
+    "stale worker result cannot overwrite a newer selected agenda",
+    "persisted page transitions clear interrupted work and permit retry",
+    "Back and Forward during a pending solve never restore a stuck exploring state",
+    "mobile skip link is fully offscreen until keyboard-focused and activates workspace",
+    "390px and 320px layouts avoid page-level horizontal overflow",
+    "maximum-length text stays contained at 320px",
+    "no runtime errors, CSP violations or outbound application requests"
+  ],
+  "errors": [],
+  "csp": [],
+  "captures": [
+    {
+      "name": "desktop",
+      "scrollX": 0,
+      "scrollY": 0,
+      "viewportWidth": 1440,
+      "viewportHeight": 1100,
+      "skipLink": {
+        "top": -54,
+        "bottom": -12,
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, -54)",
+        "focused": false
+      }
+    },
+    {
+      "name": "mobile",
+      "scrollX": 0,
+      "scrollY": 0,
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "skipLink": {
+        "top": -54,
+        "bottom": -12,
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, -54)",
+        "focused": false
+      }
+    }
+  ],
+  "navigationRecovery": {
+    "actualBackForward": true,
+    "bfcacheObserved": false,
+    "restoredStatus": "まだ探索していません",
+    "forcedPersistedEventTest": true
+  },
+  "network": "No non-local requests observed during real UI flows",
+  "viewports": [
+    "1440x1100",
+    "390x844",
+    "320x740"
+  ],
+  "limitations": "Synthetic Chromium automation only; physical devices, screen readers, other browsers and demand unverified. Worker stale-result and pending-navigation flows use controlled mocks. Persisted page-transition events are also dispatched explicitly; actual Back/Forward BFCache use is recorded separately."
+}

@@ -1,11 +1,11 @@
 {
-  "measuredAt": "2026-10-03T05:36:54.261Z",
+  "measuredAt": "2026-10-03T05:02:44.302Z",
   "environment": {
-    "node": "v24.21.0",
+    "node": "v24.19.0",
     "platform": "linux",
     "arch": "x64",
-    "osRelease": "6.17.0-1022-azure",
-    "cpuModel": "Intel(R) Xeon(R) 6973P-C"
+    "osRelease": "6.18.44",
+    "cpuModel": "AMD EPYC 9V74 80-Core Processor"
   },
   "method": "Single local Node run per workload/budget; wall time includes cooperative timer yields. No browser timing, no production traffic, no statistical latency claim. Search control is a deterministic node budget.",
   "differentialBank": {
@@ -61,7 +61,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": null,
-      "elapsedMs": 1.176
+      "elapsedMs": 1.551
     },
     {
       "id": "equipment-blackout",
@@ -98,7 +98,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": null,
-      "elapsedMs": 0.558
+      "elapsedMs": 0.555
     },
     {
       "id": "pinned-obstruction",
@@ -115,7 +115,7 @@
       "objective": null,
       "verified": null,
       "knownFeasibleWitnessVerified": null,
-      "elapsedMs": 0.106
+      "elapsedMs": 0.129
     },
     {
       "id": "seeded-light-20261003",
@@ -148,7 +148,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 3.649
+      "elapsedMs": 4.859
     },
     {
       "id": "seeded-light-20261003",
@@ -181,7 +181,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 1.772
+      "elapsedMs": 2.548
     },
     {
       "id": "seeded-light-20261003",
@@ -214,7 +214,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 1.497
+      "elapsedMs": 2.012
     },
     {
       "id": "seeded-medium-72817",
@@ -253,7 +253,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 2.492
+      "elapsedMs": 2.213
     },
     {
       "id": "seeded-medium-72817",
@@ -292,7 +292,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 10.301
+      "elapsedMs": 11.043
     },
     {
       "id": "seeded-medium-72817",
@@ -331,7 +331,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 9.605
+      "elapsedMs": 11.487
     },
     {
       "id": "seeded-tight-92389",
@@ -354,7 +354,7 @@
       "objective": null,
       "verified": null,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 0.722
+      "elapsedMs": 0.748
     },
     {
       "id": "seeded-tight-92389",
@@ -377,7 +377,7 @@
       "objective": null,
       "verified": null,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 18.179
+      "elapsedMs": 18.526
     },
     {
       "id": "seeded-tight-92389",
@@ -400,7 +400,7 @@
       "objective": null,
       "verified": null,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 203.003
+      "elapsedMs": 214.941
     },
     {
       "id": "seeded-max120-120120",
@@ -445,7 +445,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 1952.617
+      "elapsedMs": 1930.631
     },
     {
       "id": "seeded-full20-120120",
@@ -514,7 +514,7 @@
       },
       "verified": true,
       "knownFeasibleWitnessVerified": true,
-      "elapsedMs": 4545.094
+      "elapsedMs": 4658.104
     }
   ]
 }

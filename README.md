@@ -6,6 +6,14 @@
 
 これは小規模な就職活動向けのエンジニアリング作品です。実際の主催者による利用検証・需要検証はまだ行っていません。最適化という手法の新規性や世界初を主張するものではありません。
 
+## 検証済みの範囲
+
+[公開リポジトリ](https://github.com/Masanori-Spec/agenda-repair) · [成功した検証実行](https://github.com/Masanori-Spec/agenda-repair/actions/runs/37100372657)
+
+2026-10-03のGitHub CIで、223件のNodeテストと21件のChromiumブラウザシナリオが成功しました。独立オラクルは2,150入力を比較しています。検証したアプリのコミットは `79185cb4f69484704070f013dfe0d166a4eac5eb`。正確な環境・対象・未検証事項は[検証記録](docs/VERIFICATION.md)を参照してください。
+
+[デスクトップ画面](docs/screenshots/desktop.png) / [モバイル幅の画面](docs/screenshots/mobile.png) は合成サンプルを使った実際のCIスクリーンショットです。実機・Safari/Firefox・スクリーンリーダーの検証ではありません。履歴の戻る／進む操作は成功しましたが、この実行では実際のBFCache復元は発生しておらず、その経路は模擬イベントによる確認に限られます。
+
 ## 30秒で試す
 
 Node.js 22以上を用意して、このフォルダで実行します。

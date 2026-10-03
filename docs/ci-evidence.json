@@ -1,0 +1,29 @@
+{
+  "repository": "https://github.com/Masanori-Spec/agenda-repair",
+  "applicationCommit": "79185cb4f69484704070f013dfe0d166a4eac5eb",
+  "runId": 37100372657,
+  "runUrl": "https://github.com/Masanori-Spec/agenda-repair/actions/runs/37100372657",
+  "conclusion": "success",
+  "nodeTests": 223,
+  "browserScenarios": 21,
+  "artifactZipSha256": "21394073f396a5e100f4d6a20196a5a67065b0dcc2b1518aaa41cfa26c38623d",
+  "files": [
+    {
+      "path": "docs/browser-results.json",
+      "sha256": "5e26e441e155dc9c150ae529f899d7719edaedeef45e98b5a085ff3fe6011548"
+    },
+    {
+      "path": "docs/ci-benchmark-results.json",
+      "sha256": "54ba8e578c33383e40dd63cc5e40d749901eb82717b43fd49a70495885277162"
+    },
+    {
+      "path": "docs/screenshots/desktop.png",
+      "sha256": "34a0dc7c332fb9711de079e1412c7fc194ab6492bee086944f4353258d5e6a6b"
+    },
+    {
+      "path": "docs/screenshots/mobile.png",
+      "sha256": "12fc6db5ab0a038f2a27348cf7e0dbafa1d9775901ff7c4c96718aeb62a9bc85"
+    }
+  ],
+  "scope": "Synthetic Chromium automation. Actual Back/Forward passed using reload; actual BFCache was not observed. Persisted lifecycle events and stale-result cases also use controlled mocks. Screenshots visually inspected without editing."
+}
