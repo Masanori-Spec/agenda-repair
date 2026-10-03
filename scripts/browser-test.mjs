@@ -111,6 +111,24 @@ try{
     }finally{await other.close();}
   });
   await choose(0);await run();
+  await check('mobile skip link is fully offscreen until keyboard-focused and activates workspace',async()=>{
+    const other=await context.newPage();
+    try{
+      for(const width of [390,320]){
+        await other.setViewportSize({width,height:844});await other.goto(`${url}?skip-width=${width}`);await other.locator('#solve:enabled').waitFor();
+        const hiddenRect=await other.locator('.skip-link').evaluate(link=>{const r=link.getBoundingClientRect();return {top:r.top,bottom:r.bottom};});
+        assert.ok(hiddenRect.bottom<0,JSON.stringify({width,hiddenRect}));
+        await other.keyboard.press('Tab');
+        assert.equal(await other.evaluate(()=>document.activeElement.classList.contains('skip-link')),true);
+        const focusedRect=await other.locator('.skip-link').boundingBox();
+        assert.ok(focusedRect.y>=0 && focusedRect.y+focusedRect.height<=844,JSON.stringify(focusedRect));
+        await other.keyboard.press('Enter');
+        assert.equal(new URL(other.url()).hash,'#workspace');
+        await other.locator('#solve').focus();
+        assert.ok(await other.locator('.skip-link').evaluate(link=>link.getBoundingClientRect().bottom<0));
+      }
+    }finally{await other.close();}
+  });
   await check('390px and 320px layouts avoid page-level horizontal overflow',async()=>{for(const width of [390,320]){await page.setViewportSize({width,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.equal(await page.locator('#solve').isVisible(),true);}await page.setViewportSize({width:390,height:844});await page.screenshot({path:new URL('../artifacts/mobile.png',import.meta.url).pathname,fullPage:true});});
   await check('maximum-length text stays contained at 320px',async()=>{const p=structuredClone(DEMOS[0].problem);p.title='T'.repeat(120);p.sessions.forEach(s=>s.title='S'.repeat(120));p.rooms.forEach(r=>r.label='R'.repeat(120));p.resources.forEach(r=>r.label='Q'.repeat(120));await importOk(p);await run();await page.setViewportSize({width:320,height:740});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);});
   await check('no runtime errors, CSP violations or outbound application requests',async()=>{assert.deepEqual(errors,[]);assert.deepEqual(csp,[]);assert.ok(requests.every(r=>r.startsWith(url)||r.startsWith('blob:')),JSON.stringify(requests));});
